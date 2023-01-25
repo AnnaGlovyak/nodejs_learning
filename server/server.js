@@ -21,6 +21,7 @@ const server = http.createServer((req, res) => {
     }
     res.end(JSON.stringify(user))
   } else {
+    
     res.writeHead(404)
     res.end()
   }
