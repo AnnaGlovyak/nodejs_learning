@@ -1,12 +1,20 @@
 const express = require('express')
-
+const hbs = require('express-handlebars')
 const app = express()
 
+app.engine('hbs', hbs({
+  extname: 'hbs',
+  defaultLayout: 'layout',
+  layoutsDir: __dirname + '/views/layouts/'
+}))
+app.set('view engine', 'hbs')
+
+// Middleware
 app.use('/css', express.static(__dirname + '/public/css'))
 
 app.use('/', (req, res, next) => {
   console.log('someone made request from:' + req.url)
-  res.cookie("coockieName", 'coockieValue')
+  res.cookie('coockieName', 'coockieValue')
   next()
 })
 
@@ -27,10 +35,22 @@ app.get('/', (req, res) => {
 app.get('/api/user', (req, res) => {
   res.send({
     name: 'Anna',
-    lastname: 'Glovuak'
+    lastname: 'Glovyak'
   })
 })
 
+app.get('/user', (req, res) => {
+  res.render('user', {
+    title: 'User profile',
+    name: 'Anna',
+    lastName: 'Glovyak',
+    valid: true,
+    pets: ['cat', 'dog', 'bird'],
+    parents: [
+      { dad: 'Ivan', mother: 'Olga' }
+    ]
+  })
+})
 /// params
 
 app.get('/api/:user/:id', (req, res) => {
