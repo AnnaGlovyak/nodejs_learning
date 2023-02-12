@@ -1,5 +1,6 @@
 const express = require('express')
 const hbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 const app = express()
 
 app.engine('hbs', hbs({
@@ -8,6 +9,8 @@ app.engine('hbs', hbs({
   layoutsDir: __dirname + '/views/layouts/'
 }))
 app.set('view engine', 'hbs')
+
+const urlencodeParser = bodyParser.urlencoded({extended: false})
 
 // Middleware
 app.use('/css', express.static(__dirname + '/public/css'))
@@ -30,6 +33,10 @@ app.get('/', (req, res) => {
             </body>
         </html>
     `)
+})
+
+app.get('/enteruser', (req, res) => {
+  res.render('enteruser')
 })
 
 app.get('/api/user', (req, res) => {
@@ -74,6 +81,16 @@ app.get('/api/car', (req, res) => {
     brand,
     year
   })
+})
+
+// POST
+
+app.post('/enteruser', urlencodeParser, (req, res) => {
+  const firstname = req.body.firstname
+  const lastname = req.body.lastname
+
+  console.log(firstname)
+  console.log(lastname)
 })
 
 const port = process.env.PORT || 3000
