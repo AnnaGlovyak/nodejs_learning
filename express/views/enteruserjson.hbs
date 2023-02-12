@@ -1,0 +1,24 @@
+<h1>Enter new user</h1>
+
+<form id="form">
+
+    <div>Enter first name</div>
+    <input type="text" name="firstname" id="firstname">
+
+    <div>Enter last name</div>
+    <input type="text" name="lastname" id="lastname">
+
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    const form = document.getElementById('form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const firstname = document.getElementById('firstname').value;
+        const lastname = document.getElementById('lastname').value;
+
+        fetch('/enteruserjson', {method: 'POST', body: JSON.stringify({firstname, lastname}), headers: {'Content-Type': 'application/json'}})
+    })
+</script>

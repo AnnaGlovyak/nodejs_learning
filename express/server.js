@@ -10,7 +10,8 @@ app.engine('hbs', hbs({
 }))
 app.set('view engine', 'hbs')
 
-const urlencodeParser = bodyParser.urlencoded({extended: false})
+const urlencodeParser = bodyParser.urlencoded({ extended: false })
+const jsonencodeParser = bodyParser.json()
 
 // Middleware
 app.use('/css', express.static(__dirname + '/public/css'))
@@ -37,6 +38,10 @@ app.get('/', (req, res) => {
 
 app.get('/enteruser', (req, res) => {
   res.render('enteruser')
+})
+
+app.get('/enteruserjson', (req, res) => {
+  res.render('enteruserjson')
 })
 
 app.get('/api/user', (req, res) => {
@@ -86,6 +91,14 @@ app.get('/api/car', (req, res) => {
 // POST
 
 app.post('/enteruser', urlencodeParser, (req, res) => {
+  const firstname = req.body.firstname
+  const lastname = req.body.lastname
+
+  console.log(firstname)
+  console.log(lastname)
+})
+
+app.post('/enteruserjson', jsonencodeParser, (req, res) => {
   const firstname = req.body.firstname
   const lastname = req.body.lastname
 
